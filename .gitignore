@@ -1,0 +1,38 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Personal Data
+data/
+memory/
+
+# Model Cache (if you use one later)
+models/cache/
+
+# Temporary files
+temp/
+*.wav
+*.mp3
