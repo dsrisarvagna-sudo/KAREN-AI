@@ -36,3 +36,10 @@ models/cache/
 temp/
 *.wav
 *.mp3
+
+# Temporary test files
+voice_test.py
+whisper_test.py
+
+# Accidental Windows/PowerShell files
+WindowsPowerShell/
