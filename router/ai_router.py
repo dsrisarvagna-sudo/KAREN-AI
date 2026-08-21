@@ -17,6 +17,7 @@ Available skills:
 browser
 calculator
 vscode
+vision
 chat
 
 Examples
@@ -44,6 +45,12 @@ what is recursion
 
 Output:
 {{"skill":"chat"}}
+
+User:
+what is on my screen
+
+Output:
+{{"skill":"vision","action":"screen_understanding"}}
 
 User:
 {command}

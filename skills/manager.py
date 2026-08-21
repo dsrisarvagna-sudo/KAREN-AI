@@ -1,6 +1,7 @@
 from skills.browser import BrowserSkill
 from skills.vscode import VSCodeSkill
 from skills.calculator import CalculatorSkill
+from skills.vision import VisionSkill
 
 
 class SkillManager:
@@ -10,7 +11,8 @@ class SkillManager:
         self.skills = {
             "browser": BrowserSkill(),
             "vscode": VSCodeSkill(),
-            "calculator": CalculatorSkill()
+            "calculator": CalculatorSkill(),
+            "vision": VisionSkill()
         }
 
 

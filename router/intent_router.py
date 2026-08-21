@@ -6,10 +6,24 @@ from router.schemas import Intent
 class IntentRouter:
 
     _BROWSER_TARGETS = ("youtube", "google", "browser", "chrome")
+    _VISION_PATTERNS = (
+        r"\bwhat\s+is\s+on\s+(?:my|the)\s+screen\b",
+        r"\bwhat(?:'s|\s+is)\s+on\s+(?:my|the)\s+screen\b",
+        r"\bdescribe\s+(?:my|the)\s+screen\b",
+        r"\bwhat\s+do\s+you\s+see\s+on\s+(?:my|the)\s+screen\b",
+        r"\blook\s+at\s+(?:my|the)\s+screen\b",
+        r"\banalyze\s+(?:my|the)\s+screen\b",
+    )
 
     def route(self, command: str) -> Intent:
 
         command = (command or "").lower().strip()
+
+        if any(re.search(pattern, command) for pattern in self._VISION_PATTERNS):
+            return Intent(
+                skill="vision",
+                action="screen_understanding",
+            )
 
         search_match = re.match(
             r"^search\s+(?:(?:google)\s+)?(?:for\s+)?(.+?)\s*$",

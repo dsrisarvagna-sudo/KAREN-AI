@@ -21,6 +21,7 @@ Available skills:
 browser
 calculator
 vscode
+vision
 
 Examples:
 
@@ -47,6 +48,12 @@ Open VS Code
 
 Output:
 {{"skill":"vscode"}}
+
+User:
+What is on my screen
+
+Output:
+{{"skill":"vision","action":"screen_understanding"}}
 
 If no skill matches, output:
 
