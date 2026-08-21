@@ -10,6 +10,13 @@ def test_text_wake_word_extracts_inline_command():
     assert result.command == "open YouTube"
 
 
+def test_text_wake_word_extracts_screen_command():
+    result = detect_wake_word("Hey Karen, what is on my screen")
+
+    assert result.detected is True
+    assert result.command == "what is on my screen"
+
+
 def test_text_without_wake_word_is_ignored():
     result = detect_wake_word("what is recursion")
     assert result.detected is False

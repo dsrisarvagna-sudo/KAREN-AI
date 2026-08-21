@@ -8,6 +8,7 @@ import pytest
 from router.intent_router import IntentRouter
 from router.schemas import Intent
 from skills.vision import VisionSkill
+from core.assistant import KarenAssistant
 
 
 @pytest.mark.parametrize(
@@ -78,3 +79,24 @@ def test_existing_browser_and_ai_routes_are_preserved() -> None:
 
     ai_intent = router.route("what is recursion?")
     assert ai_intent.skill == "chat"
+
+
+def test_assistant_sends_actual_vision_response_to_existing_speaker() -> None:
+    assistant = KarenAssistant.__new__(KarenAssistant)
+    assistant.memory = Mock()
+    assistant.memory_manager = Mock()
+    assistant.memory_manager.get_memory.return_value = {}
+    assistant.router = Mock()
+    assistant.router.route.return_value = Intent(
+        skill="vision", action="screen_understanding"
+    )
+    assistant.skill_manager = Mock()
+    assistant.skill_manager.execute.return_value = (
+        "Your screen shows Visual Studio Code with main.py open."
+    )
+    assistant.speaker = Mock()
+
+    response = assistant.chat("what is on my screen")
+
+    assert response == "Your screen shows Visual Studio Code with main.py open."
+    assistant.speaker.speak.assert_called_once_with(response)
