@@ -8,16 +8,21 @@ from tkinter import ttk
 from . import theme
 from .components import ConversationView, action_button, configure_styles
 from .controller import UIController
+from .history_view import HistoryView
 from .state import ConversationMessage, KarenStatus, UIState
+from memory.history import ConversationHistory
 
 
 class KarenWindow:
     """Presentation-only window with a small, controller-friendly surface."""
 
-    def __init__(self, root: tk.Tk, controller: UIController | None = None, state: UIState | None = None) -> None:
+    def __init__(self, root: tk.Tk, controller: UIController | None = None, state: UIState | None = None,
+                 history: ConversationHistory | None = None) -> None:
         self.root = root
         self.controller = controller
         self.state = state or UIState()
+        self.history = history or ConversationHistory()
+        self.current_conversation_id: str | None = None
         configure_styles(root)
         root.title("Karen")
         root.geometry("390x540")
@@ -31,6 +36,7 @@ class KarenWindow:
 
     def _build(self) -> None:
         shell = ttk.Frame(self.root, style="Karen.TFrame", padding=14)
+        self.shell = shell
         shell.pack(fill="both", expand=True)
         shell.columnconfigure(0, weight=1)
         shell.rowconfigure(1, weight=1)
@@ -58,7 +64,23 @@ class KarenWindow:
         action_button(actions, "🧩  Skills", "skills", self._action).grid(row=0, column=1, sticky="ew")
         action_button(actions, "⚙  Settings", "settings", self._action).grid(row=0, column=2, sticky="ew")
 
+        self.history_view = HistoryView(self.root, self.history, self.show_main, self._set_current_conversation)
+
+    def _set_current_conversation(self, conversation: object) -> None:
+        self.current_conversation_id = getattr(conversation, "conversation_id", None)
+
+    def show_history(self) -> None:
+        self.shell.pack_forget()
+        self.history_view.refresh()
+        self.history_view.pack(fill="both", expand=True)
+
+    def show_main(self) -> None:
+        self.history_view.pack_forget()
+        self.shell.pack(fill="both", expand=True)
+
     def _action(self, action: str) -> None:
+        if action == "history":
+            self.show_history()
         if self.controller is not None:
             self.controller.on_ui_action(action)
 

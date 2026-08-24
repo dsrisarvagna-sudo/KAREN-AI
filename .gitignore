@@ -28,6 +28,10 @@ logs/
 # Personal Data
 data/
 memory/
+!memory/
+memory/*
+!memory/conversation.py
+!memory/history.py
 
 # Model Cache (if you use one later)
 models/cache/
