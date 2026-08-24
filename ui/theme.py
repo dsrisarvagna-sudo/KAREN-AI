@@ -1,0 +1,16 @@
+"""Visual constants for Karen's compact dark theme."""
+
+BG = "#11151c"
+SURFACE = "#191f28"
+SURFACE_ALT = "#202834"
+BORDER = "#2b3543"
+TEXT = "#f3f5f7"
+MUTED = "#8f9bab"
+ACCENT = "#7dd3a7"
+ACCENT_DARK = "#214c3b"
+USER = "#26384b"
+KAREN = "#24332e"
+OFFLINE = "#e06c75"
+
+FONT = "Segoe UI"
+MONO = "Cascadia Mono"
