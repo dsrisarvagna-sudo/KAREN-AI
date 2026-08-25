@@ -37,10 +37,14 @@ class ConversationMessage:
 @dataclass
 class UIState:
     status: KarenStatus = KarenStatus.ONLINE
+    runtime_status: str = "Online"
     messages: list[ConversationMessage] = field(default_factory=list)
 
     def set_status(self, status: KarenStatus | str) -> None:
         self.status = status if isinstance(status, KarenStatus) else KarenStatus(status)
+
+    def set_runtime_status(self, status: str) -> None:
+        self.runtime_status = status
 
     def add_message(self, speaker: str, text: str) -> None:
         self.messages.append(ConversationMessage(speaker=speaker, text=text))
