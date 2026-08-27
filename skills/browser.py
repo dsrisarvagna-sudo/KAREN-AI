@@ -36,11 +36,13 @@ class BrowserSkill(Skill):
         if isinstance(command, Intent):
 
             if command.action == "search" and command.query:
-
                 query = quote_plus(command.query.strip())
                 webbrowser.open(f"https://www.google.com/search?q={query}")
-
                 return f"Searching for {command.query}."
+            
+            if command.action == "open_url" and command.target:
+                webbrowser.open(command.target)
+                return f"Opening {command.target}"
 
             if command.target in self._TARGET_URLS:
                 target = command.target
@@ -48,7 +50,6 @@ class BrowserSkill(Skill):
                 return f"Opening {self._TARGET_LABELS[target]}."
 
             webbrowser.open("https://www.google.com")
-
             return "Opening browser."
 
         command = command.lower()
